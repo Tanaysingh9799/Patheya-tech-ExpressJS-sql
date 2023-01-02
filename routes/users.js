@@ -1,3 +1,4 @@
+const { json } = require('express');
 var express = require('express');
 var router = express.Router();
 var  _ = require('lodash');
@@ -103,7 +104,7 @@ router.get('/', function (req, res, next) {
   })
 
 
-
+//FIND BY ID FUNCTIONALITY ONLY GIVE REQUIRED RESULT
   router.get('/findby/:id',(req  ,res ) =>
   { 
     let findbyId = userD.find(f => f.id === parseInt(req.params.id))
@@ -114,6 +115,25 @@ router.get('/', function (req, res, next) {
           res.send(findbyId)
         }
   })
+
+
+
+
+  //FIND BY NAME FUNCTIONALITY ONLY GIVE REQUIRED RESULT
+  router.get('/findby/:first_name',(req  ,res ) =>
+  { 
+    let findbyName = userD.find(f => f.first_name === req.params.first_name)
+    if (!userD){
+      res.send(error)
+    }
+    else{
+          res.json(findbyName)
+        }
+  })
+
+
+
+
 
 
   //CREATE OPERATION
@@ -142,16 +162,12 @@ let index = userD.findIndex(el => el.id == id)
 userD[index] = {
 ...userD[index],
   company:company
-}
-if (error){
-  res.send(error)
-}
-else {
+};
+  console.log("updated company")
   res.send({
     message:"Succesfully Updated",
-    data:index
+    data:userD[index]
   })
-}
 });
 
 
