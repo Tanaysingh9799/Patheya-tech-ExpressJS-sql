@@ -36,7 +36,10 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.send('Error 404 - Requested task connot be completed');
+  res.json({
+    status: err.status +" - NOT FOUND" || 500,
+    message:"Error:Requested Task cannot be completed"
+  });
 });
 app.listen(port,() => {
   console.log(`App is listening on = http://localhost:3000/`)
